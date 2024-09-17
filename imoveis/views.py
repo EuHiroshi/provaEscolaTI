@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Imovel
+from .models import Imovel, Comodo
 
 # Create your views here.
 def home(request):
@@ -34,10 +34,21 @@ def delete(request, id):
   imovel.delete()
   return redirect(home)
 
-def salvarComodo(request,id):
+def verComodos(request, id):
+  imovel = Imovel.objects.get(id=id)
+  comodos = Comodo.objects.filter(imovel=imovel)
+  return render(request, 'comodo.html', {'imovel':imovel, 'comodos': comodos})
 
-  return redirect(home)
+def salvarComodo(request, id):
+  imovel = Imovel.objects.get(id=id)
+  nome_comodo = request.POST.get('nome_comodo')
+  Comodo.objects.create(nome=nome_comodo, imovel=imovel)
+  comodos = Comodo.objects.filter(imovel=imovel)
+  return render(request, 'comodo.html', {'imovel': imovel, 'comodos': comodos})
 
-def deleteComodo(request, id):
-
-  return redirect(home)
+def deleteComodo(request, imovel_id, comodo_id):
+  imovel = Imovel.objects.get(id=imovel_id)  
+  comodo = Comodo.objects.get(id=comodo_id, imovel=imovel)  
+  comodo.delete()
+  comodos = Comodo.objects.filter(imovel=imovel)     
+  return render(request, 'comodo.html', {'imovel': imovel, 'comodos': comodos})

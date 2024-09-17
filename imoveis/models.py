@@ -8,3 +8,10 @@ class Imovel(models.Model):
 
   def __str__(self):
     return self.descricao
+
+class Comodo(models.Model):
+  nome = models.CharField(max_length=100)
+  imovel = models.ForeignKey('Imovel', on_delete=models.CASCADE, related_name='comodos')
+
+  def __str__(self):
+      return self.nome

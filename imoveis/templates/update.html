@@ -3,17 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Update imovel</title>
+  <title>Atualizar Imóvel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .container {
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+    }
+
+    .info {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    form p {
+      margin: 10px 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
-  {{imovel.id}}: {{imovel.descricao}} | {{imovel.dataCompra}} | {{imovel.endereco}}
+<header>
+  <a href="{% url 'home' %}" style="color: white; text-decoration: none; font-size: 20px; position: absolute; left: 20px;">&#8592; Voltar</a>
+  <span style="text-align: center; display: block;">Atualizar Imóvel</span>
+</header>
+
+<div class="container">
+  <div class="info">
+    {{imovel.id}}: {{imovel.descricao}} | {{imovel.dataCompra}} | {{imovel.endereco}}
+  </div>
 
   <form action="{% url 'update' imovel.id %}" method="POST">
     {% csrf_token %}
-    <p><label>Digite a descrição: </label><input type="text" name="descricao" value="{{imovel.descricao}}"></p>
-    <p><label>Digite a data de compra: </label><input type="text" name="dataCompra" value="{{imovel.dataCompra}}"></p>
-    <p><label>Digite o endereço: </label><input type="text" name="endereco" value="{{imovel.endereco}}"></p>
-    <p><button type="submit">Atualizar</button></p>
+    <p>
+      <label>Digite a descrição: </label>
+      <input type="text" name="descricao" value="{{imovel.descricao}}" required>
+    </p>
+    <p>
+      <label>Digite a data de compra: </label>
+      <input type="text" name="dataCompra" value="{{ imovel.dataCompra }}" required>
+    </p>
+    <p>
+      <label>Digite o endereço: </label>
+      <input type="text" name="endereco" value="{{imovel.endereco}}" required>
+    </p>
+    <p>
+      <button type="submit">Atualizar</button>
+    </p>
   </form>
+</div>
+
 </body>
 </html>

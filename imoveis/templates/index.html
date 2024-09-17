@@ -3,25 +3,133 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Imoveis</title>
+  <title>Imóveis</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: white;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    li a {
+      color: #4CAF50;
+      text-decoration: none;
+      margin-left: 15px;
+    }
+
+    li a:hover {
+      text-decoration: underline;
+    }
+
+    form {
+      background-color: white;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+    }
+
+    form p {
+      margin: 10px 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+  </style>
 </head>
 <body>
+<header>
+  <span style="text-align: center; display: block;">Cômodos</span>
+</header>
+
   <ul>
+    
     {% for imovel in imoveis %}
       <li> 
-        {{imovel.id}}: {{imovel.descricao}} | {{imovel.dataCompra}} | {{imovel.endereco}}  
-        <a href="{% url 'editar' imovel.id %}">Editar</a> - 
-        <a href="{% url 'delete' imovel.id %}">Excluir</a>
+        <span>{{imovel.id}}: {{imovel.descricao}} | {{imovel.dataCompra}} | {{imovel.endereco}}</span>
+        <span class="actions">
+          <a href="{% url 'editar' imovel.id %}">Editar</a> 
+          <a href="{% url 'delete' imovel.id %}">Excluir</a>
+          <a href="{% url 'verComodos' imovel.id %}">Comodos</a>
+        </span>
       </li>  
     {% endfor %}
   </ul>
 
   <form action="{% url 'salvar' %}" method="POST">
     {% csrf_token %}
-    <p><label>Digite a descrição: </label><input type="text" name="descricao"></p>
-    <p><label>Digite a data de compra: </label><input type="text" name="dataCompra"></p>
-    <p><label>Digite o endereço: </label><input type="text" name="endereco"></p>
-    <p><button type="submit">Salvar</button></p>
+    <p>
+      <label>Digite a descrição: </label>
+      <input type="text" name="descricao" placeholder="Ex. Casa" required>
+    </p>
+    <p>
+      <label>Digite a data de compra: </label>
+      <input type="text" name="dataCompra" placeholder="Ex. 2024-12-30" required>
+    </p>
+    <p>
+      <label>Digite o endereço: </label>
+      <input type="text" name="endereco" placeholder="Ex. Rua Brasil, 123" required>
+    </p>
+    <p>
+      <button type="submit">Salvar</button>
+    </p>
   </form>
+
 </body>
 </html>
