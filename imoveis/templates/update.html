@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update imovel</title>
+</head>
+<body>
+  {{imovel.id}}: {{imovel.descricao}} | {{imovel.dataCompra}} | {{imovel.endereco}}
+
+  <form action="{% url 'update' imovel.id %}" method="POST">
+    {% csrf_token %}
+    <p><label>Digite a descrição: </label><input type="text" name="descricao" value="{{imovel.descricao}}"></p>
+    <p><label>Digite a data de compra: </label><input type="text" name="dataCompra" value="{{imovel.dataCompra}}"></p>
+    <p><label>Digite o endereço: </label><input type="text" name="endereco" value="{{imovel.endereco}}"></p>
+    <p><button type="submit">Atualizar</button></p>
+  </form>
+</body>
+</html>
